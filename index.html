@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/abcjs-audio.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <title>BGM ジェネレーター</title>
+</head>
+<body class="d-flex flex-column align-items-center justify-content-sm-around">
+    <header><h1 class="m-0">BGM ジェネレーター</h1></header>
+    <div class="mx-4">
+        <div class="my-4">
+            <label for="tempo" class="form-label">テンポ</label><br>
+            <input type="text" class="form-control w-50 d-inline me-2" id="tempo" value="120"><span>BPM</span>
+        </div>
+        <div class="mb-4">
+            <label for="melodic-sound" class="form-label">音色（メロディー）</label>
+            <select name="melodic-sound" id="melodic-sound" class="form-select form-select-lg">
+                <option value="0">アコースティック・グランド・ピアノ</option>
+                <option value="4" selected>エレクトリック・ピアノ1</option>
+                <option value="5">エレクトリック・ピアノ2</option>
+                <option value="21">アコーディオン</option>
+                <option value="24">アコースティック・ギター</option>
+                <option value="40">バイオリン</option>
+                <option value="41">ビオラ</option>
+                <option value="42">チェロ</option>
+                <option value="46">オーケストラ・ハープ</option>
+                <option value="48">ストリング・アンサンブル</option>
+                <option value="56">トランペット</option>
+                <option value="65">アルト・サックス</option>
+                <option value="71">クラリネット</option>
+                <option value="73">フルート</option>
+                <option value="80">リード（矩形波）</option>
+                <option value="82">リード（calliope 蒸気オルガン）</option>
+                <option value="88">パッド（ニュー・エイジ）</option>
+                <option value="106">三味線</option>
+                <option value="107">琴</option>
+            </select>
+            <!-- https://wineroses.hatenablog.com/entry/2024/01/03/152607 -->
+            <!-- https://ja.m.wikipedia.org/wiki/General_MIDI -->
+        </div>
+        <div class="mb-4">
+            <label for="chord-sound" class="form-label">音色（コード）</label>
+            <select name="chord-sound" id="chord-sound" class="form-select form-select-lg">
+                <option value="0">アコースティック・グランド・ピアノ</option>
+                <option value="4">エレクトリック・ピアノ1</option>
+                <option value="5">エレクトリック・ピアノ2</option>
+                <option value="24">アコースティック・ギター（ナイロン）</option>
+                <option value="25" selected>アコースティック・ギター（スティール）</option>
+                <option value="28">エレクトリック・ギター（ミュート）</option>
+                <option value="32">アコースティック・ベース</option>
+                <option value="33">エレクトリック・ベース（フィンガー）</option>
+                <option value="34">エレクトリック・ベース（ピック）</option>
+                <option value="38">シンセ・ベース1</option>
+                <option value="39">シンセ・ベース2</option>
+                <option value="44">トレモロ・ストリングス</option>
+                <option value="45">ピチカート・ストリングス</option>
+                <option value="46">オーケストラ・ハープ</option>
+                <option value="80">リード（矩形波）</option>
+                <option value="82">リード（calliope 蒸気オルガン）</option>
+                <option value="88">パッド（ニュー・エイジ）</option>
+                <option value="106">三味線</option>
+                <option value="107">琴</option>
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="length" class="form-label">長さ</label><br>
+            <input type="text" class="form-control w-50 d-inline me-2" id="length" value="6"><span>小節</span>
+        </div>
+        <div class="form-check mb-4 d-none">
+            <input class="form-check-input" type="checkbox" value="" id="endless">
+            <label class="form-check-label" for="endless">エンドレス</label>
+        </div>
+    </div>
+    
+    <button onclick="playMelody();" class="btn btn-dark btn-lg mb-5">音楽を生成</button>
+    <div id="play-btn" class="justify-content-center w-100 px-4" style="display: none;">
+        <button class="btn btn-dark btn-lg icon replay w-50 me-4" onclick="replayAudio()"></button>
+        <button class="btn btn-dark btn-lg icon play w-50 me-4" onclick="playAudio()"></button>
+        <button class="btn btn-dark btn-lg icon pause w-50" onclick="pauseAudio()"></button>
+    </div>
+    <div id="score0"></div>
+    <div id="play0"></div>
+    <div id="score1"></div>
+    <div id="play1"></div>
+    <script type="text/javascript" src="./js/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./js/abcjs-basic-min.js"></script>
+    <!-- <script type="text/javascript" src="./js/abcjs_basic_midi-min.js"></script> -->
+    <script type="text/javascript" src="./js/sound.js"></script>
+    <script type="text/javascript" src="./js/main.js"></script>
+    <!-- <script type="text/javascript" src="./js/test.js"></script> -->
+</body>
+</html>
