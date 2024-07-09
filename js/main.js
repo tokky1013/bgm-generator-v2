@@ -127,9 +127,3 @@ function playMelody(key=0) {
     setAudio(1, getAbcString(chordAbc, chordSound, tempo), true);
     $('#play-btn').css('display', 'flex');
 }
-
-$(document).ready(function(){
-    $('#endless').change(function() {
-        $('#length').prop('disabled', $(this).prop('checked'));
-    });
-});
