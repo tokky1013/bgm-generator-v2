@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="h-100">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./css/main.css">
     <title>BGM ジェネレーター</title>
 </head>
-<body class="d-flex flex-column align-items-center justify-content-sm-around">
+<body class="d-flex flex-column align-items-center justify-content-sm-around h-100">
     <header><h1 class="m-0">BGM ジェネレーター</h1></header>
     <div class="mx-4">
         <div class="my-4">
@@ -48,10 +48,10 @@
                 <option value="4">エレクトリック・ピアノ1</option>
                 <option value="5">エレクトリック・ピアノ2</option>
                 <option value="24">アコースティック・ギター（ナイロン）</option>
-                <option value="25" selected>アコースティック・ギター（スティール）</option>
+                <option value="25">アコースティック・ギター（スティール）</option>
                 <option value="28">エレクトリック・ギター（ミュート）</option>
                 <option value="32">アコースティック・ベース</option>
-                <option value="33">エレクトリック・ベース（フィンガー）</option>
+                <option value="33" selected>エレクトリック・ベース（フィンガー）</option>
                 <option value="34">エレクトリック・ベース（ピック）</option>
                 <option value="38">シンセ・ベース1</option>
                 <option value="39">シンセ・ベース2</option>
@@ -80,6 +80,9 @@
         <button class="btn btn-dark btn-lg icon replay w-50 me-4" onclick="replayAudio()"></button>
         <button class="btn btn-dark btn-lg icon play w-50 me-4" onclick="playAudio()"></button>
         <button class="btn btn-dark btn-lg icon pause w-50" onclick="pauseAudio()"></button>
+    </div>
+    <div class="mt-auto p-3">
+        <a href="https://tokky1013.github.io/bgm-generator-v1/">Ver.1 はこちら</a>
     </div>
     <div id="score0"></div>
     <div id="play0"></div>
