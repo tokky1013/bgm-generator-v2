@@ -1,3 +1,7 @@
+body {
+    min-height: 100svh;
+}
+
 header {
     height: 80px;
     width: 100%;
