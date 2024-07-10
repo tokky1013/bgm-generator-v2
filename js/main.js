@@ -94,6 +94,7 @@ function pauseAudio() {
 }
 
 function playMelody(key=0) {
+    confirmInput();
     const barNum = $('#length').val() - 0;
     const melody = new Melody(null, key);
     const chordProgression = new ChordProgression(
@@ -126,6 +127,23 @@ function playMelody(key=0) {
     setAudio(0, getAbcString(melodyAbc, melodicSound, tempo));
     setAudio(1, getAbcString(chordAbc, chordSound, tempo), true);
     $('#play-btn').css('display', 'flex');
+}
+
+// 入力欄を半角数字にして、範囲外ならデフォルトの値をセット
+function confirmInput() {
+    const fullnums = '０１２３４５６７８９';
+    const reFullnums = new RegExp('['+fullnums+']','g');
+    const toHalfnums = text => text.replace(reFullnums, m=>fullnums.indexOf(m));
+
+    let tempo = toHalfnums($('#tempo').val()).replace(/[^0-9]/g, '') - 0;
+    if(tempo <= 0) tempo = 100;
+
+    $('#tempo').val(tempo);
+
+    let length = toHalfnums($('#length').val()).replace(/[^0-9]/g, '') - 0;
+    if(length < 3) length = 3;
+
+    $('#length').val(length);
 }
 
 $(document).ready(function(){
