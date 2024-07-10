@@ -3,13 +3,11 @@ body {
 }
 
 header {
-    height: 80px;
     width: 100%;
-    padding-left: 20px;
+    padding: 20px 20px 0;
     background-color: #282828;
     color: white;
-    display: flex;
-    align-items: center;
+    font-size: smaller;
 }
 
 @font-face {
