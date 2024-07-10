@@ -197,7 +197,6 @@ class Melody {
         else this.begin()
         this.soundPrev = new Sound(this.sound.toAbc());
         this.key = key;
-        this.beginningOfPhrase = true;
         this.barNum = 0;
     }
 
@@ -205,56 +204,77 @@ class Melody {
     // startOrEndはstartで最初, endで最後, before endでフレーズの最後になって欲しくない時
     getBar(startOrEnd='') {
         let abc = '';
-        if(startOrEnd === 'start') {
-            abc = this.sound.add(-2).toAbc(this.key) + '/4' + this.sound.add(-1).toAbc(this.key) + '/4';
-        }else if(startOrEnd === 'end') {
-            this.sound = this.soundPrev
-            this.goToHigherCEG();
-            abc = this.sound.toAbc(this.key);
-            this.beginningOfPhrase = true;
-            this.barNum = -1
-        }else if(this.beginningOfPhrase) {
-            while(this.#i < 4) {
-                abc += this.getRhythm();
-                this.#i += 1;
-            }
-            this.beginningOfPhrase = false;
-        }else if(this.barNum % 4 === 0 && startOrEnd !== 'before end') {
-            if(Math.random() <= 0.5) {
-                while(this.#i < 2) {
-                    abc += this.getRhythm();
-                    this.#i += 1;
-                }
-                this.goToClosestCEG();
-                abc += this.sound.toAbc(this.key) + ' z';
+        this.#i = 0;        // 箔を数える
+        this.barNum++;      // これが4の倍数の時にフレーズを終わる
+        switch (startOrEnd) {
+            case 'start':
+                // 最初の一小節(四分音符分の長さしかない)
+                abc = this.sound.toAbc(this.key) + '/4';
+                this.#goToAdjacent();
+                abc += this.sound.toAbc(this.key) + '/4';
+                this.next();
+                this.barNum = 0;
+                break;
 
-                this.beginningOfPhrase = true;
-            }else {
-                while(this.#i < 2) {
+            case 'end':
+                // 最後の一小節(四分音符分の長さしかない)
+                this.sound = this.soundPrev
+                this.goToHigherCEG();
+                abc = this.sound.toAbc(this.key);
+                this.begin();
+                this.barNum = 0;
+                break;
+
+            case 'before end':
+                // 最後の小節の一つ前 終わらないようにする
+                while(this.#i < 4) {
                     abc += this.getRhythm();
                     this.#i += 1;
                 }
-                this.goToClosestCEG();
-                abc += this.sound.toAbc(this.key) + '/2 z';
-                this.begin();
-                abc += this.sound.add(-2).toAbc(this.key) + '/4' + this.sound.add(-1).toAbc(this.key) + '/4';
-            }
-            this.rhythmCount = 0;
-        }else {
-            while(this.#i < 4) {
-                abc += this.getRhythm();
-                this.#i += 1;
-            }
+                break;
+        
+            default:
+                if(this.barNum % 4 === 0) {
+                    // フレーズを終わる場合
+                    if(Math.random() <= 0.5) {
+                        while(this.#i < 2) {
+                            abc += this.getRhythm();
+                            this.#i += 1;
+                        }
+                        this.goToClosestCEG();
+                        abc += this.sound.toAbc(this.key) + ' z';
+        
+                        this.begin();
+                    }else {
+                        while(this.#i < 2) {
+                            abc += this.getRhythm();
+                            this.#i += 1;
+                        }
+                        this.goToClosestCEG();
+                        abc += this.sound.toAbc(this.key) + '/2 z';
+                        this.begin();
+                        abc += this.sound.toAbc(this.key) + '/4';
+                        this.#goToAdjacent();
+                        abc += this.sound.toAbc(this.key) + '/4';
+                        this.next();
+                    }
+                    this.rhythmCount = 0;
+                    this.barNum = 0;
+                }else {
+                    // フレーズを終わらない場合
+                    while(this.#i < 4) {
+                        abc += this.getRhythm();
+                        this.#i += 1;
+                    }
+                }
+                break;
         }
-        this.barNum++;
-        this.#i = 0;
         return abc + '|';
     }
 
     // リセット
     reset() {
         this.begin();
-        this.beginningOfPhrase = true;
         this.#i = 0;
         this.barNum = 0;
         this.rhythmCount = 0;
