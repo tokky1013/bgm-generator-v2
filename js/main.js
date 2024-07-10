@@ -56,7 +56,7 @@ function setAudio(i, abcString, play=false) {
             if(play) {
                 setTimeout(() => {
                     replayAudio();
-                }, 450);
+                }, 600);
             }
         });
     }).catch(function (error) {
