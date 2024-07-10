@@ -133,7 +133,11 @@ $(document).ready(function(){
         $(this).select();
     });
 
+    $('#tempo').blur(confirmInput);
+
     $('#length').on('click', function() {
         $(this).select();
     });
+
+    $('#length').blur(confirmInput);
 });
